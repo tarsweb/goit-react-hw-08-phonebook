@@ -11,9 +11,9 @@ const Register = () => {
   }
 
   return (
-    <Modal onClose={toggleModal}> 
+    // <Modal onClose={toggleModal}> 
       <RegisterForm />
-    </Modal> 
+    // </Modal> 
   )
 }
 
