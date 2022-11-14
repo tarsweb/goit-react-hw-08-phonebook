@@ -1,4 +1,8 @@
-import { useFormik } from "formik";
+import { useDispatch  } from 'react-redux'
+
+import { register } from 'redux/auth/operations'
+
+import { useFormik } from "formik"
 
 import Box from "components/Box"
 
@@ -9,15 +13,19 @@ import Box from "components/Box"
 // }
 
 const RegisterForm = () => {
+
+  const dispatch = useDispatch();
   
   const formik = useFormik({
     initialValues: {
-      userName : "",
+      name : "",
       email: "",
       password: "",
     },
     onSubmit: (values, { resetForm }) => {
-      console.log("values", values);
+      // console.log(values);
+      dispatch(register(values));
+      resetForm();
     }
   })
   return (
@@ -35,8 +43,8 @@ const RegisterForm = () => {
         Username
         <input
           type="text"
-          name="userName"
-          value={formik.values.userName}
+          name="name"
+          value={formik.values.name}
           onChange={formik.handleChange}
         />
       </Box>

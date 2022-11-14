@@ -21,11 +21,15 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   extraReducers: builder => {
-    builder.addCase(register.fulfilled, (state, action) => {
+    builder
+    .addCase(register.pending, console.log("Загружаем..."))
+
+    .addCase(register.fulfilled, (state, action) => {
       state.user = action.payload.user;
       state.token = action.payload.token;
       state.isLoggedIn = true;
-    });
+    })
+    .addCase(register.rejected, (_, action) => console.log(action.payload));
   },
 });
 
