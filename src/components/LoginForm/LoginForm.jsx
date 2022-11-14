@@ -34,7 +34,7 @@ const LoginForm = () => {
       <Box as="label" display="flex" flexDirection="column">
         Password
         <input
-          type="email"
+          type="password"
           name="password"
           value={formik.values.password}
           onChange={formik.handleChange}
