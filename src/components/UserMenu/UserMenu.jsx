@@ -1,5 +1,7 @@
-import { useSelector, useDispatch } from 'react-redux'
-import { selectUser } from "redux/auth/selectors"
+import { useDispatch } from 'react-redux'
+
+import { useAuth } from 'hooks'
+
 import { logout } from 'redux/auth/operations'
 
 import Box from "components/Box"
@@ -7,7 +9,7 @@ import Box from "components/Box"
 const UserMenu = () => {
   const dispatch = useDispatch();
 
-  const user = useSelector(selectUser);
+  const {user} = useAuth();
 
   return (
     <Box display="flex" gridGap="8px">
