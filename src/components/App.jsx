@@ -5,10 +5,9 @@ import { lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { RestrictedRoute } from './RestrictedRoute';
-
-import Layout from 'components/Layout';
 import { PrivateRoute } from './PrivateRoute';
 
+import Layout from 'components/Layout';
 
 const HomePage = lazy(() => import('pages/Home'));
 const ContactsPage = lazy(() => import('pages/Contacts'))
