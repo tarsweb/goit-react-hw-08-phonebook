@@ -11,6 +11,7 @@ import {
 
 import { authReducer } from './auth/slice'
 import { contactsReducer } from './contacts/slice'
+import { filterReducer } from './filter/slice';
 
 // const middleware = [
 //   ...getDefaultMiddleware({
@@ -24,6 +25,7 @@ export const store = configureStore({
   reducer: {
     auth: authReducer,
     contacts: contactsReducer,
+    filter: filterReducer,
   },
   middleware(getDefaultMiddleware) {
     return getDefaultMiddleware({

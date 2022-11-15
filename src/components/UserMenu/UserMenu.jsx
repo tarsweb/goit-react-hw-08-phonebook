@@ -1,5 +1,3 @@
-import { NavLink } from "react-router-dom"
-
 import { useSelector, useDispatch } from 'react-redux'
 import { selectUser } from "redux/auth/selectors"
 import { logout } from 'redux/auth/operations'

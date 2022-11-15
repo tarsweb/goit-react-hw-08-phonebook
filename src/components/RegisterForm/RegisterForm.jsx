@@ -21,9 +21,9 @@ const RegisterForm = () => {
   
   const formik = useFormik({
     initialValues: {
-      name : "vdv",
-      email: "vano@ukr.net",
-      password: "1234567",
+      name : "",
+      email: "",
+      password: "",
     },
     onSubmit: (values, { resetForm }) => {
       // console.log(values);

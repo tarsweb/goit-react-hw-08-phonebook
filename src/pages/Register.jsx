@@ -1,22 +1,22 @@
-import { useState } from "react";
-import { useSelector, useDispatch  } from 'react-redux'
+// import { useState } from "react";
+// import { useSelector, useDispatch  } from 'react-redux'
 
-import { resetError } from 'redux/auth/slice'
+// import { resetError } from 'redux/auth/slice'
 
-import Modal from "components/Modal"
+// import Modal from "components/Modal"
 import RegisterForm from "components/RegisterForm"
 
 const Register = () => {
-  const [showModal, setShowModal] = useState(false);
+  // const [showModal, setShowModal] = useState(false);
 
   // const dispatch = useDispatch();
 
   // dispatch(resetError())
 
-  const toggleModal = () => {
-    console.log("Закрыть");
-    setShowModal(prevState => !prevState)
-  }
+  // const toggleModal = () => {
+  //   console.log("Закрыть");
+  //   setShowModal(prevState => !prevState)
+  // }
 
   return (
     // <Modal onClose={toggleModal}> 
