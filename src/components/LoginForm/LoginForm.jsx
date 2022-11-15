@@ -1,8 +1,17 @@
+import { useSelector, useDispatch } from 'react-redux';
+
+import { login } from 'redux/auth/operations'
+import { selectError } from 'redux/auth/selectors';
+
 import { useFormik } from 'formik';
 
 import Box from 'components/Box';
 
 const LoginForm = () => {
+
+  const dispatch = useDispatch();
+  const error = useSelector(selectError);
+
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -10,6 +19,8 @@ const LoginForm = () => {
     },
     onSubmit: (values, { resetForm }) => {
       console.log('values', values);
+      dispatch(login(values));
+      resetForm();
     },
   });
   return (
@@ -31,6 +42,7 @@ const LoginForm = () => {
           onChange={formik.handleChange}
         />
       </Box>
+      {error && error?.email && <>{error.email}</>}
       <Box as="label" display="flex" flexDirection="column">
         Password
         <input
@@ -40,7 +52,9 @@ const LoginForm = () => {
           onChange={formik.handleChange}
         />
       </Box>
+      {error && error?.password && <>{error.password}</>}
       <button type="submit"> Log In </button>
+      {error && <p>{error.message}</p>}
     </Box>
   );
 };

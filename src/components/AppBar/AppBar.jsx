@@ -2,11 +2,11 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import Navigation from "components/Navigation"
 import AuthNav from 'components/AuthNav';
+import UserMenu from 'components/UserMenu';
 
 import Box from 'components/Box';
 
 import { selectIsLoggedIn } from 'redux/auth/selectors'
-
 
 export const AppBar = () => {
 
@@ -15,7 +15,7 @@ export const AppBar = () => {
   return (
     <Box as='header' display='flex' justifyContent="space-between">
       <Navigation />
-      {isLoggedIn ? <>Login</> : <AuthNav/ >}
+      {isLoggedIn ? <UserMenu /> : <AuthNav/ >}
     </Box>
   )
 }
