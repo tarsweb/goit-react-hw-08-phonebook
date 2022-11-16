@@ -1,12 +1,19 @@
-import { useSelector, useDispatch  } from 'react-redux'
+import { useDispatch  } from 'react-redux'
 
 import { register } from 'redux/auth/operations'
-import { selectError } from 'redux/auth/selectors'
+// import { selectError } from 'redux/auth/selectors'
 
 import { useFormik } from "formik";
 import * as Yup from 'yup';
 
 import Box from "components/Box"
+
+import TextField from '@mui/material/TextField';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import EmailIcon from '@mui/icons-material/Email';
+import PasswordIcon from '@mui/icons-material/Password';
+
+import Button from '@mui/material/Button';
 
 const schema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
@@ -18,7 +25,7 @@ const RegisterForm = () => {
 
   const dispatch = useDispatch();
 
-  const error = useSelector(selectError);
+  // const error = useSelector(selectError);
   
   const formik = useFormik({
     initialValues: {
@@ -35,7 +42,6 @@ const RegisterForm = () => {
     }
   })
   return (
-    // <form autoComplete="off" onSubmit={formik.handleSubmit}>
     <Box
       as="form"
       display="flex"
@@ -45,44 +51,53 @@ const RegisterForm = () => {
       autoComplete="off"
       onSubmit={formik.handleSubmit}
     >
-      <Box as="label" display="flex" flexDirection="column">
-        Username
-        <input
+      <Box display="flex">
+        <AccountCircleIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+        <TextField
+          label="Username"
           type="text"
           name="name"
           value={formik.values.name}
           onChange={formik.handleChange}
+          error={formik.errors.name}
+          helperText={formik.touched.name && formik.errors.name ? 
+            formik.errors.name : null}
+          size="small"
         />
       </Box>
-      {/* {error && error?.name && <>{error.name}</>} */}
-      {formik.touched.name && formik.errors.name ? 
-           <> {formik.errors.name} </> : null}
-      <Box as="label" display="flex" flexDirection="column">
-        Email
-        <input
+
+      <Box display="flex">
+        <EmailIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+        <TextField
+          label="E-mail"
           type="email"
           name="email"
           value={formik.values.email}
           onChange={formik.handleChange}
+          error={formik.errors.email}
+          helperText={formik.touched.email && formik.errors.email ? 
+            formik.errors.email : null}
+          size="small"
         />
       </Box>
-      {/* {error && error?.email && <>{error.email}</>} */}
-      {formik.touched.email && formik.errors.email ? 
-            <> {formik.errors.email} </> : null}
-      <Box as="label" display="flex" flexDirection="column">
-        Password
-        <input
+      
+      <Box display="flex">
+        <PasswordIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+        <TextField
+          label="Password"
           type="password"
           name="password"
           value={formik.values.password}
           onChange={formik.handleChange}
+          error={formik.errors.password}
+          helperText={formik.touched.password && formik.errors.password ? 
+                formik.errors.password : null}
+          size="small"
         />
       </Box>
-      {/* {error && error?.password && <>{error.password}</>} */}
-      {formik.touched.password && formik.errors.password ? 
-           <> {formik.errors.password} </> : null}
-      <button type="submit"> Register </button>
-      {error && <p>{error?.message}</p>}
+      
+      <Button variant='contained' type="submit"> Register </Button>
+      
     </Box>
   );
 }
