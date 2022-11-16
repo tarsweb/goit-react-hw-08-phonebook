@@ -34,7 +34,7 @@ const ContactList = () => {
       gridGap={theme.space.small}
       flexDirection="column"
     >
-      {isLoading && !error && <p>Loading tasks...</p>}
+      {isLoading && !error && <p>Loading contacts...</p>}
       {error && <p>{error}</p>}
       {contacts.length ?
         contacts.map(({ id, name: contactName, number: phoneNumber }) => (

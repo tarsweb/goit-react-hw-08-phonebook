@@ -18,6 +18,20 @@ const persistConfig = {
   whitelist: ['token'],
 }
 
+const handlePending = state => {
+  console.log("pending");
+}
+
+const handelFulfilled = (state, action) => {
+  state.user = action.payload.user;
+  state.token = action.payload.token;
+  state.isLoggedIn = true;
+}
+
+const handleRejected = (state, action) => {
+  state.error = action.payload
+}
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -29,39 +43,23 @@ const authSlice = createSlice({
   extraReducers: builder => {
     builder
     // register
-    .addCase(register.pending, console.log("Проверка ..."))
-    .addCase(register.fulfilled, (state, action) => {
-      state.user = action.payload.user;
-      state.token = action.payload.token;
-      state.isLoggedIn = true;
-    })
-    .addCase(register.rejected, (state, action) => {
-      console.log(action.payload);
-      state.error = action.payload
-    })
+    .addCase(register.pending, handlePending)
+    .addCase(register.fulfilled, handelFulfilled)
+    .addCase(register.rejected, handleRejected)
 
     // login
-    .addCase(login.pending, console.log("login"))
-    .addCase(login.fulfilled, (state, action) => {
-      console.log("action", action);
-      state.user = action.payload.user;
-      state.token = action.payload.token;
-      state.isLoggedIn = true;
-    })
-    .addCase(login.rejected, (state, action) => {
-      state.error = action.payload;
-    })
+    .addCase(login.pending, handlePending)
+    .addCase(login.fulfilled, handelFulfilled)
+    .addCase(login.rejected, handleRejected)
 
     // logout
-    .addCase(logout.pending, console.log(("Выход...")))
+    .addCase(logout.pending, handlePending)
     .addCase(logout.fulfilled, (state) => {
       state.user = { name: null, email: null };
       state.token = null;
       state.isLoggedIn = false;
     })
-    .addCase(logout.rejected, (state, action) => {
-      state.error = action.payload;
-    })
+    .addCase(logout.rejected, handleRejected)
 
     //refreshUser
     .addCase(refreshUser.pending, (state) => {

@@ -1,8 +1,8 @@
 import { useEffect, lazy } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
+import { useAuth } from 'hooks';
 import { refreshUser } from 'redux/auth/operations';
-import { selectIsRefreshing } from 'redux/auth/selectors'
 
 import { Route, Routes } from 'react-router-dom';
 
@@ -20,7 +20,7 @@ const NotFoundPage = lazy(() => import('pages/NotFound'));
 const App = () => {
   const dispatch = useDispatch();
 
-  const isRefgeshing = useSelector(selectIsRefreshing);
+  const {isRefgeshing} = useAuth();
 
   useEffect(() => {
     dispatch(refreshUser())

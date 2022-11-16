@@ -4,8 +4,14 @@ import { login } from 'redux/auth/operations'
 import { selectError } from 'redux/auth/selectors';
 
 import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
 import Box from 'components/Box';
+
+const schema = Yup.object().shape({
+  email: Yup.string().min(3, `Name must be at least 3 characters`).matches("", 'E-mail is not valid').required('E-mail is required'),
+  password: Yup.string().min(7,`Password must be at least 7 characters`).required('Password is required'),
+});
 
 const LoginForm = () => {
 
@@ -17,8 +23,8 @@ const LoginForm = () => {
       email: '',
       password: '',
     },
+    validationSchema : schema,
     onSubmit: (values, { resetForm }) => {
-      console.log('values', values);
       dispatch(login(values));
       resetForm();
     },
@@ -33,16 +39,21 @@ const LoginForm = () => {
       autocomplete="off"
       onSubmit={formik.handleSubmit}
     >
-      <Box as="label" display="flex" flexDirection="column">
-        Email
-        <input
-          type="email"
-          name="email"
-          value={formik.values.email}
-          onChange={formik.handleChange}
-        />
+      <Box display="flex" flexDirection="column">
+        <Box as="label" display="flex" flexDirection="column">
+          E-mail
+          <input
+            type="email"
+            name="email"
+            value={formik.values.email}
+            onChange={formik.handleChange}
+          />
+        </Box>
+        {error && error?.email && <>{error.email}</>}
+        {formik.touched.email && formik.errors.email ? 
+            <> {formik.errors.email} </> : null}
       </Box>
-      {error && error?.email && <>{error.email}</>}
+      <Box display="flex" flexDirection="column">
       <Box as="label" display="flex" flexDirection="column">
         Password
         <input
@@ -53,6 +64,9 @@ const LoginForm = () => {
         />
       </Box>
       {error && error?.password && <>{error.password}</>}
+      {formik.touched.password && formik.errors.password ? 
+           <> {formik.errors.password} </> : null}
+      </Box>
       <button type="submit"> Log In </button>
       {error && <p>{error.message}</p>}
     </Box>

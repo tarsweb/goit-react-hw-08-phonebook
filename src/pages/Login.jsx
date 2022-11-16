@@ -2,6 +2,7 @@
 
 // import { resetError } from 'redux/auth/slice' 
 
+import Modal from "components/Modal"
 import LoginForm from "components/LoginForm"
 
 const Login = () => {
@@ -11,8 +12,10 @@ const Login = () => {
   // dispatch(resetError())
 
   return (
-    <LoginForm />
+    <Modal> 
+      <LoginForm />
+    </Modal>
   )
 }
 
-export {Login as default}
+export { Login as default }

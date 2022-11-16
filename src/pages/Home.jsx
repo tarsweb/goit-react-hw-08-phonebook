@@ -2,7 +2,8 @@ import Box from "components/Box"
 
 const Home = () => {
   return (
-    <Box
+    <Box 
+      as="main"
       display="flex"
       alignItems="center"
       justifyContent="center"

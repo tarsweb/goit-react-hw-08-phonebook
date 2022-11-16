@@ -3,15 +3,16 @@ import { useSelector, useDispatch  } from 'react-redux'
 import { register } from 'redux/auth/operations'
 import { selectError } from 'redux/auth/selectors'
 
-import { useFormik } from "formik"
+import { useFormik } from "formik";
+import * as Yup from 'yup';
 
 import Box from "components/Box"
 
-// const RegisterForm = () => {
-//   return (
-//     <Box as="label" width="100%" height="100%" bg="white"> Register Form </Box>
-//   )
-// }
+const schema = Yup.object().shape({
+  name: Yup.string().required("Name is required"),
+  email: Yup.string().min(3, `Name must be at least 3 characters`).matches("", 'E-mail is not valid').required('E-mail is required'),
+  password: Yup.string().min(7,`Password must be at least 7 characters`).required('Password is required'),
+});
 
 const RegisterForm = () => {
 
@@ -25,9 +26,11 @@ const RegisterForm = () => {
       email: "",
       password: "",
     },
+    validationSchema: schema,
     onSubmit: (values, { resetForm }) => {
       // console.log(values);
       dispatch(register(values));
+      resetForm();
       //if (!error) resetForm();
     }
   })
@@ -51,7 +54,9 @@ const RegisterForm = () => {
           onChange={formik.handleChange}
         />
       </Box>
-      {error && error?.name && <>{error.name}</>}
+      {/* {error && error?.name && <>{error.name}</>} */}
+      {formik.touched.name && formik.errors.name ? 
+           <> {formik.errors.name} </> : null}
       <Box as="label" display="flex" flexDirection="column">
         Email
         <input
@@ -61,7 +66,9 @@ const RegisterForm = () => {
           onChange={formik.handleChange}
         />
       </Box>
-      {error && error?.email && <>{error.email}</>}
+      {/* {error && error?.email && <>{error.email}</>} */}
+      {formik.touched.email && formik.errors.email ? 
+            <> {formik.errors.email} </> : null}
       <Box as="label" display="flex" flexDirection="column">
         Password
         <input
@@ -71,7 +78,9 @@ const RegisterForm = () => {
           onChange={formik.handleChange}
         />
       </Box>
-      {error && error?.password && <>{error.password}</>}
+      {/* {error && error?.password && <>{error.password}</>} */}
+      {formik.touched.password && formik.errors.password ? 
+           <> {formik.errors.password} </> : null}
       <button type="submit"> Register </button>
       {error && <p>{error?.message}</p>}
     </Box>

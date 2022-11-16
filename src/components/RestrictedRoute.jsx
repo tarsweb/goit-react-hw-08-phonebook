@@ -1,12 +1,11 @@
 import { Navigate } from 'react-router-dom';
 
-import { useSelector} from 'react-redux'
-import { selectIsLoggedIn } from 'redux/auth/selectors'
+import { useAuth } from 'hooks'
 
 const RestrictedRoute =({ component: Component, redirectTo = '/' }) => {
-  const isLogin = useSelector(selectIsLoggedIn);
+  const {isLoggedIn}  = useAuth()
 
-  return isLogin ? <Navigate to= {redirectTo} /> : Component
+  return isLoggedIn ? <Navigate to= {redirectTo} /> : Component
 }
 
 export { RestrictedRoute }

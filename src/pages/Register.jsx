@@ -3,7 +3,7 @@
 
 // import { resetError } from 'redux/auth/slice'
 
-// import Modal from "components/Modal"
+import Modal from "components/Modal"
 import RegisterForm from "components/RegisterForm"
 
 const Register = () => {
@@ -19,10 +19,10 @@ const Register = () => {
   // }
 
   return (
-    // <Modal onClose={toggleModal}> 
+    <Modal> 
       <RegisterForm />
-    // </Modal> 
+    </Modal> 
   )
 }
 
-export { Register as default}
+export { Register as default }
