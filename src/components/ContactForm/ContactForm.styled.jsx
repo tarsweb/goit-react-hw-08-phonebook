@@ -27,6 +27,7 @@ const FormStyled = styled.form`
   padding: ${({theme}) => theme.space.large};
   border: 1px solid ${({theme}) => theme.colors.accentAltenative};
   border-radius: ${({theme}) => theme.radii.normal};
+  background-color:${({theme}) => theme.colors.primary};
 `
 
 const ErrorMessageStyled = styled.div`

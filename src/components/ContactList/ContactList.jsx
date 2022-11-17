@@ -7,11 +7,12 @@ import { useSelector, useDispatch } from 'react-redux'
 import { selectError, selectIsLoading, selectShowContacts } from "redux/contacts/selectors"
 import { fetchContacts, deleteContact } from 'redux/contacts/operations';
 
-import { ButtonStyled } from './ContactList.styled'
+// import { ButtonStyled } from './ContactList.styled'
 
-import {AiOutlineUserDelete } from 'react-icons/ai';
+// import {AiOutlineUserDelete } from 'react-icons/ai';
 import Button from '@mui/material/Button';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
+
 
 import Box from 'components/Box';
 
@@ -50,8 +51,8 @@ const ContactList = () => {
               aligItems="flex-start"
               border={`1px solid ${theme.colors.border}`}
             >
-              <Box>
-                <span> {contactName} </span>
+              <Box display="inline-flex" alignItems="center" gridGap={theme.space.normal} flexGrow="1">
+                <Box as="span" flexGrow="1" maxWidth="50%"> {contactName} </Box>
                 <span> {phoneNumber} </span>
               </Box>
               {/* <ButtonStyled type="button" onClick={() => dispatch(deleteContact(id))}>

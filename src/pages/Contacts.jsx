@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 
 import Box from "components/Box"
@@ -12,6 +11,8 @@ import Modal from "components/ModalAddContact"
 
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 
+import Portal from '@mui/material/Portal';
+
 const Contacts = () => {
   const [showModal, setShowModal] = useState(false);
 
@@ -22,7 +23,7 @@ const Contacts = () => {
   return (
     <Box as="main">
       {/* <ContactForm /> */}
-      <Box display="flex" justifyContent="space-between" alignItems="center">
+      <Box display="flex" pt='8px' justifyContent="space-between" alignItems="center">
         <Filter />
         <Button
           variant="contained"

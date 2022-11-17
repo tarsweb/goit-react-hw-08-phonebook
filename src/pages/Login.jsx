@@ -12,9 +12,9 @@ const Login = () => {
   // dispatch(resetError())
 
   return (
-    <Modal> 
+    // <Modal> 
       <LoginForm />
-    </Modal>
+    // </Modal>
   )
 }
 

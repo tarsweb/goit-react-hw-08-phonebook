@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import { useDispatch  } from 'react-redux'
 
 import { register } from 'redux/auth/operations'
@@ -9,11 +11,16 @@ import * as Yup from 'yup';
 import Box from "components/Box"
 
 import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+
+import InputAdornment from '@mui/material/InputAdornment';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import EmailIcon from '@mui/icons-material/Email';
 import PasswordIcon from '@mui/icons-material/Password';
-
-import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
 
 const schema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
@@ -26,6 +33,7 @@ const RegisterForm = () => {
   const dispatch = useDispatch();
 
   // const error = useSelector(selectError);
+  const [showPassword, setShowPassword] = useState(false);
   
   const formik = useFormik({
     initialValues: {
@@ -35,12 +43,12 @@ const RegisterForm = () => {
     },
     validationSchema: schema,
     onSubmit: (values, { resetForm }) => {
-      // console.log(values);
       dispatch(register(values));
+      setShowPassword(false);
       resetForm();
-      //if (!error) resetForm();
     }
   })
+
   return (
     <Box
       as="form"
@@ -54,15 +62,16 @@ const RegisterForm = () => {
       <Box display="flex">
         <AccountCircleIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
         <TextField
-          label="Username"
+          label="User name"
           type="text"
           name="name"
           value={formik.values.name}
           onChange={formik.handleChange}
-          error={formik.errors.name}
+          error={!!formik.errors.name}
           helperText={formik.touched.name && formik.errors.name ? 
             formik.errors.name : null}
           size="small"
+          sx={{ width : '100%'}}
         />
       </Box>
 
@@ -74,10 +83,11 @@ const RegisterForm = () => {
           name="email"
           value={formik.values.email}
           onChange={formik.handleChange}
-          error={formik.errors.email}
+          error={!!formik.errors.email}
           helperText={formik.touched.email && formik.errors.email ? 
             formik.errors.email : null}
           size="small"
+          sx={{ width : '100%'}}
         />
       </Box>
       
@@ -85,14 +95,28 @@ const RegisterForm = () => {
         <PasswordIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
         <TextField
           label="Password"
-          type="password"
+         type={showPassword ? 'text' : 'password'}
           name="password"
           value={formik.values.password}
           onChange={formik.handleChange}
-          error={formik.errors.password}
+          error={!!formik.errors.password}
           helperText={formik.touched.password && formik.errors.password ? 
                 formik.errors.password : null}
           size="small"
+          sx={{ width : '100%'}}
+          InputProps={{
+            endAdornment : <InputAdornment position="end">
+              <IconButton
+                aria-label="toggle password visibility"
+                onClick={() => setShowPassword(!showPassword)}
+                onMouseDown={(event) => {event.preventDefault();}}
+                edge="end"
+                sx={showPassword ? {color: 'warning.main'} : null}
+              >
+                {showPassword ? <VisibilityOff /> : <Visibility />}
+              </IconButton>
+            </InputAdornment>
+          }}
         />
       </Box>
       

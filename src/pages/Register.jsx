@@ -6,6 +6,11 @@
 import Modal from "components/Modal"
 import RegisterForm from "components/RegisterForm"
 
+import Box from "components/Box"
+
+import { Backdrop, Portal} from "@mui/material";
+
+
 const Register = () => {
   // const [showModal, setShowModal] = useState(false);
 
@@ -19,8 +24,18 @@ const Register = () => {
   // }
 
   return (
-    <Modal> 
-      <RegisterForm />
+    // <Backdrop> 
+    //   <Portal>
+        
+    //   </Portal>
+    // </Backdrop>
+    <Modal>
+      <Box mx="auto" px="20px" maxWidth="960px" display="flex"
+      alignItems="center"
+      justifyContent="center"
+     >
+        <RegisterForm />
+      </Box>
     </Modal> 
   )
 }

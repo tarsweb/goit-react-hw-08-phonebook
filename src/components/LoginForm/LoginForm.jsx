@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import { useDispatch } from 'react-redux';
 
 import { login } from 'redux/auth/operations'
@@ -9,17 +11,15 @@ import * as Yup from 'yup';
 import Box from 'components/Box';
 
 import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 
-// import FilledInput from '@mui/material/FilledInput';
-// import InputAdornment from '@mui/material/InputAdornment';
-// import Visibility from '@mui/icons-material/Visibility';
-// import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import InputAdornment from '@mui/material/InputAdornment';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 import EmailIcon from '@mui/icons-material/Email';
 import PasswordIcon from '@mui/icons-material/Password';
-// import IconButton from '@mui/material/IconButton';
-
-import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
 
 const schema = Yup.object().shape({
   email: Yup.string().min(3, `Name must be at least 3 characters`).matches("", 'E-mail is not valid').required('E-mail is required'),
@@ -31,32 +31,20 @@ const LoginForm = () => {
   const dispatch = useDispatch();
   // const error = useSelector(selectError);
 
+  const [showPassword, setShowPassword] = useState(false);
+
   const formik = useFormik({
     initialValues: {
       email: '',
       password: '',
-      showPassword: false,
     },
     validationSchema : schema,
     onSubmit: (values, { resetForm }) => {
       dispatch(login(values));
+      setShowPassword(false);
       resetForm();
     },
-    handleClickShowPassword: values =>{
-      values.showPassword = !values.showPassword
-    }
   });
-
-  //const handleClickShowPassword = () => {
-  //   setValues({
-  //     ...values,
-  //     showPassword: !values.showPassword,
-  //   });
-  //};
-
-  // const handleMouseDownPassword = (event) => {
-  //   event.preventDefault();
-  // };
 
   return (
     <Box
@@ -76,48 +64,40 @@ const LoginForm = () => {
           name="email"
           value={formik.values.email}
           onChange={formik.handleChange}
-          error={formik.errors.email}
+          error= {!!formik.errors.email}
           helperText={formik.touched.email && formik.errors.email ? 
             formik.errors.email : null}
           size="small"
+          sx={{ width : '100%'}}
         />
       </Box>
 
       <Box display="flex">
-        {/* <FilledInput
-          label="Password"
-          type= {formik.values.showPassword ? 'text' : 'password'}//"password"
-          name="password"
-          value={formik.values.password}
-          onChange={formik.handleChange}
-          error={formik.errors.password}
-          helperText={formik.touched.password && formik.errors.password ? 
-               formik.errors.password : null}
-          size="small"
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton
-                aria-label="toggle password visibility"
-                onClick={formik.handleClickShowPassword}
-                onMouseDown={handleMouseDownPassword}
-                edge="end"
-              >
-                {formik.values.showPassword ? <VisibilityOff /> : <Visibility />}
-              </IconButton>
-            </InputAdornment>
-          }
-        /> */}
         <PasswordIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
         <TextField
           label="Password"
-          type="password"
+          type={showPassword ? 'text' : 'password'}
           name="password"
           value={formik.values.password}
           onChange={formik.handleChange}
-          error={formik.errors.password}
+          error={!!formik.errors.password}
           helperText={formik.touched.password && formik.errors.password ? 
                 formik.errors.password : null}
           size="small"
+          sx={{ width : '100%'}}
+          InputProps={{
+            endAdornment : <InputAdornment position="end">
+              <IconButton
+                aria-label="toggle password visibility"
+                onClick={() => setShowPassword(!showPassword)}
+                onMouseDown={(event) => {event.preventDefault();}}
+                edge="end"
+                sx={showPassword ? {color: 'warning.main'} : null}
+              >
+                {showPassword ? <VisibilityOff /> : <Visibility />}
+              </IconButton>
+            </InputAdornment>
+          }}
         />
       </Box>
 

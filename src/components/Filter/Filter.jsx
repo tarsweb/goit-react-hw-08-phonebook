@@ -31,6 +31,7 @@ const Filter = () => {
       onChange={debouncedChangeFilter}
       placeholder="Find contact by name"
       variant="standard"
+      sx={{ flexGrow : '1'}}
       InputProps={{
         startAdornment: (
           <InputAdornment position="start">

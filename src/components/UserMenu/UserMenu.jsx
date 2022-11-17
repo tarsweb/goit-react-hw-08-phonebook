@@ -5,16 +5,27 @@ import { useAuth } from 'hooks'
 import { logout } from 'redux/auth/operations'
 
 import Box from "components/Box"
-import { Button } from '@mui/material'
+
+import InputAdornment from '@mui/material/InputAdornment';
+
+import Button from '@mui/material/Button'
+import IconButton from '@mui/material/IconButton'
+import Typography from '@mui/material/Typography';
+import PersonIcon from '@mui/icons-material/Person';
 
 const UserMenu = () => {
   const dispatch = useDispatch();
 
-  const {user} = useAuth();
+  const {user: {name}} = useAuth();
 
   return (
-    <Box display="flex" gridGap="8px">
-      <p> User : {user.name} </p>
+    <Box display="flex" alignItems="center" gridGap="8px">
+      <>
+        <PersonIcon color="primary" size="small"/>
+        <Typography display='inline-flex' gap='8px'>
+          {name}
+        </Typography>
+      </>
       <Button variant="outlined" size="small" type="button" onClick={() => dispatch(logout())}> Logout </Button>
     </Box>
   )
