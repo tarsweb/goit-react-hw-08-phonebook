@@ -1,20 +1,13 @@
-// import { useDispatch  } from 'react-redux'
-
-// import { resetError } from 'redux/auth/slice' 
-
-import Modal from "components/Modal"
 import LoginForm from "components/LoginForm"
+import Box from "components/Box"
 
 const Login = () => {
 
-  // const dispatch = useDispatch();
-
-  // dispatch(resetError())
-
   return (
-    // <Modal> 
+    <Box as='main' display="flex" mx='auto' justifyContent="center" minHeight="calc(100vh - 80px)">
       <LoginForm />
-    // </Modal>
+    </Box>
+    
   )
 }
 

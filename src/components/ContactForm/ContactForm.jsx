@@ -3,18 +3,16 @@ import { addContact } from "redux/contacts/operations";
 
 import { selectContactsName } from "redux/contacts/selectors"
 
+import { useState } from "react";
+import { useTheme } from "styled-components";
+
 import { useFormik } from "formik";
 import * as Yup from 'yup';
 
-import {AiOutlineUserAdd } from 'react-icons/ai';
-
 import Box from "components/Box";
-import {FormStyled, ErrorMessageStyled, LabelStyled, Input, ButtonStyled} from './ContactForm.styled'
 
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
+import { TextField, Button, Snackbar, Alert} from '@mui/material';
 
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import PhoneIcon from '@mui/icons-material/Phone';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 
@@ -27,7 +25,19 @@ const schema = Yup.object().shape({
 });
 
 const ContactForm = () => { 
+  const theme = useTheme();
   const dispatch = useDispatch();
+
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const handleClose = (event) => {
+    if (event === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
 
   const contactsName = useSelector(selectContactsName);
 
@@ -39,7 +49,8 @@ const ContactForm = () => {
     validationSchema : schema, 
     onSubmit: (values, { resetForm }) => {
       const contactName = values.name;
-      if (contactsName.includes(contactName.toLowerCase())) alert(`${contactName} is already in contacts`)
+      if (contactsName.includes(contactName.toLowerCase()))
+      { setOpen(true); setMessage(`${contactName} is already in contacts`)}//alert(`${contactName} is already in contacts`)
       else {
         dispatch(addContact(values));
         resetForm();
@@ -48,26 +59,18 @@ const ContactForm = () => {
   });
 
   return (
-    // <Box
-    //   as="form"
-    //   autoComplete="off"
-    //   display="flex"
-    //   flexWrap="wrap"
-    //   alignItems="flex-start"
-    //   py={theme.space.normal}
-    //   gridGap={theme.space.normal}
-    //   onSubmit={formik.handleSubmit}
-      
-    // >
-    <FormStyled onSubmit={formik.handleSubmit}>
-      {/* <Box display="flex" flexDirection="column">
-        <LabelStyled>
-          Name
-          <Input type="text" name="name" value={formik.values.name} onChange={formik.handleChange}/>
-        </LabelStyled>
-        {formik.touched.name && formik.errors.name ? 
-           <ErrorMessageStyled> {formik.errors.name} </ErrorMessageStyled> : null}
-      </Box> */}
+
+    <Box as="form" display="flex"
+    flexWrap= "wrap"
+    justifyContent= "center"
+    alignItems= "flex=start"  
+    gridGap={theme.space.normal}
+    p={theme.space.large}
+    border={`1px solid ${theme.colors.accentAltenative}`}
+    borderRadius={theme.radii.normal}
+
+    autoComplete="off"
+    onSubmit={formik.handleSubmit}>
 
       <Box display="flex">
         <PersonAddIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
@@ -85,15 +88,6 @@ const ContactForm = () => {
         />
       </Box>
 
-      {/* <Box display="flex" flexDirection="column">
-        <LabelStyled>
-          Phone
-          <Input type="tel" name="number" value={formik.values.number} onChange={formik.handleChange} />
-        </LabelStyled>
-        {formik.touched.number && formik.errors.number ? 
-           <ErrorMessageStyled> {formik.errors.number} </ErrorMessageStyled> : null}
-      </Box> */}
-
       <Box display="flex">
         <PhoneIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
         <TextField
@@ -110,12 +104,20 @@ const ContactForm = () => {
         />
       </Box>
 
-      {/* <ButtonStyled type="submit"> <AiOutlineUserAdd /> Add contact </ButtonStyled> */}
       <Button variant="contained" type="submit" startIcon={<PersonAddIcon />} > Add contact </Button>
+
+      {open && 
+      <Snackbar
+        open={open}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        key='topright'
+      > 
+        <Alert onClose={handleClose} severity="warning">{message}</Alert> 
+      </Snackbar>}
       
-    </FormStyled>
-    // </Box>
+    </Box>
   );
 }
 
-export { ContactForm } 
+export { ContactForm }

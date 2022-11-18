@@ -1,3 +1,5 @@
+import { useTheme } from 'styled-components';
+
 import { useAuth } from 'hooks';
 
 import Box from 'components/Box';
@@ -8,10 +10,12 @@ const Navigation = () => {
 
   const {isLoggedIn} = useAuth();
 
+  const theme = useTheme();
+
   return (
-    <Box as="nav" display="flex" gridGap="8px">
-      <NavLinkButton to="/" end size="small"> Home </NavLinkButton>
-      {isLoggedIn && <NavLinkButton to="/contacts" size="small"> Contacts </NavLinkButton> }
+    <Box as="nav" display="flex" gridGap={theme.space.normal}>
+      <NavLinkButton to="/" end size="small" sx={{color: "primary.contrastText"}}> Home </NavLinkButton>
+      {isLoggedIn && <NavLinkButton to="/contacts" size="small" sx={{color: "primary.contrastText"}}> Contacts </NavLinkButton> }
     </Box>
   );
 }

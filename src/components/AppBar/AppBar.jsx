@@ -6,14 +6,20 @@ import UserMenu from 'components/UserMenu';
 
 import Box from 'components/Box';
 
-export const AppBar = () => {
+import { AppBar as MUIAppBar, Toolbar} from '@mui/material';
 
-  const {isLoggedIn} = useAuth();
+export const AppBar = () => {
+  const { isLoggedIn } = useAuth();
 
   return (
-    <Box as='header' display='flex' justifyContent="space-between">
-      <Navigation />
-      {isLoggedIn ? <UserMenu /> : <AuthNav/ >}
-    </Box>
-  )
-}
+    // <Box as='header' display='flex' justifyContent="space-between">
+    <MUIAppBar position="static">
+      <Toolbar>
+        <Navigation />
+        <Box flexGrow="1" />
+        {isLoggedIn ? <UserMenu /> : <AuthNav />}
+      </Toolbar>
+    </MUIAppBar>
+    // </Box>
+  );
+};

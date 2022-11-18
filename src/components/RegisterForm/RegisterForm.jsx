@@ -5,6 +5,8 @@ import { useDispatch  } from 'react-redux'
 import { register } from 'redux/auth/operations'
 // import { selectError } from 'redux/auth/selectors'
 
+import { useTheme } from 'styled-components';
+
 import { useFormik } from "formik";
 import * as Yup from 'yup';
 
@@ -32,6 +34,7 @@ const RegisterForm = () => {
 
   const dispatch = useDispatch();
 
+  const theme = useTheme();
   // const error = useSelector(selectError);
   const [showPassword, setShowPassword] = useState(false);
   
@@ -53,7 +56,7 @@ const RegisterForm = () => {
     <Box
       as="form"
       display="flex"
-      gridGap="16px"
+      gridGap={theme.space.normal}
       flexDirection="column"
       py="16px"
       autoComplete="off"

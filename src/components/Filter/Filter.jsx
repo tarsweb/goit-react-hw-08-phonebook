@@ -8,7 +8,6 @@ import InputAdornment from '@mui/material/InputAdornment';
 
 import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
-// import { Label } from './Filter.styled';
 
 const Filter = () => {
 
@@ -21,12 +20,7 @@ const Filter = () => {
   const debouncedChangeFilter = debounce(handleChangeFilter, 500);
 
   return (
-    // <Label>
-    //   Find contact by name
-    //   <input type='text' onChange={debouncedChangeFilter} />
-    // </Label>
     <TextField
-      // label="Find contact by name"
       type="text"
       onChange={debouncedChangeFilter}
       placeholder="Find contact by name"

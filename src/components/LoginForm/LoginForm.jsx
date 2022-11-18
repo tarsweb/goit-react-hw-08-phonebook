@@ -19,6 +19,8 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 import EmailIcon from '@mui/icons-material/Email';
 import PasswordIcon from '@mui/icons-material/Password';
+import { useTheme } from 'styled-components';
+
 import IconButton from '@mui/material/IconButton';
 
 const schema = Yup.object().shape({
@@ -30,6 +32,8 @@ const LoginForm = () => {
 
   const dispatch = useDispatch();
   // const error = useSelector(selectError);
+
+  const theme = useTheme();
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -50,9 +54,9 @@ const LoginForm = () => {
     <Box
       as="form"
       display="flex"
-      gridGap="16px"
+      gridGap={theme.space.large}
       flexDirection="column"
-      py="16px"
+      py={theme.space.large}
       autocomplete="off"
       onSubmit={formik.handleSubmit}
     >

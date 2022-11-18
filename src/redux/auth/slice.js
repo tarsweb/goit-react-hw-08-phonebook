@@ -18,9 +18,9 @@ const persistConfig = {
   whitelist: ['token'],
 }
 
-const handlePending = state => {
-  console.log("pending");
-}
+// const handlePending = state => {
+//   console.log("pending");
+// }
 
 const handelFulfilled = (state, action) => {
   state.user = action.payload.user;
@@ -43,17 +43,17 @@ const authSlice = createSlice({
   extraReducers: builder => {
     builder
     // register
-    .addCase(register.pending, handlePending)
+    //.addCase(register.pending, handlePending)
     .addCase(register.fulfilled, handelFulfilled)
     .addCase(register.rejected, handleRejected)
 
     // login
-    .addCase(login.pending, handlePending)
+    //.addCase(login.pending, handlePending)
     .addCase(login.fulfilled, handelFulfilled)
     .addCase(login.rejected, handleRejected)
 
     // logout
-    .addCase(logout.pending, handlePending)
+    //.addCase(logout.pending, handlePending)
     .addCase(logout.fulfilled, (state) => {
       state.user = { name: null, email: null };
       state.token = null;
