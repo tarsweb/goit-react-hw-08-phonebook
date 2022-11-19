@@ -1,18 +1,15 @@
 import { useTheme } from 'styled-components';
 
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux'
 
 import { selectError, selectIsLoading, selectShowContacts } from "redux/contacts/selectors"
 import { fetchContacts, deleteContact } from 'redux/contacts/operations';
 
-// import { ButtonStyled } from './ContactList.styled'
+import {Button, Snackbar, Alert} from '@mui/material';
 
-// import {AiOutlineUserDelete } from 'react-icons/ai';
-import Button from '@mui/material/Button';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
-
 
 import Box from 'components/Box';
 
@@ -25,9 +22,18 @@ const ContactList = () => {
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
 
+  const[openError, setOpenError] = useState(false);
+  const handleCloseError = (event) => {
+    if (event === 'clickaway') {
+      return;
+    }
+    setOpenError(false);
+  };
+ 
   useEffect(() => {
     dispatch(fetchContacts());
-  }, [dispatch]);
+    if (error) setOpenError(true)
+  }, [dispatch, error]);
 
   return (
     <Box
@@ -37,8 +43,12 @@ const ContactList = () => {
       gridGap={theme.space.small}
       flexDirection="column"
     >
-      {isLoading && !error && <p>Loading contacts...</p>}
-      {error && <p>{error}</p>}
+      {isLoading && !error && <p> Loading contacts... </p>}
+      {error && (
+        <Snackbar open={openError} autoHideDuration={3000} key="topright">
+          <Alert onClose={handleCloseError} severity="error">{error}</Alert>
+        </Snackbar>
+      )}
       {contacts.length
         ? contacts.map(({ id, name: contactName, number: phoneNumber }) => (
             <Box
@@ -51,19 +61,23 @@ const ContactList = () => {
               aligItems="flex-start"
               border={`1px solid ${theme.colors.border}`}
             >
-              <Box display="inline-flex" alignItems="center" gridGap={theme.space.normal} flexGrow="1">
-                <Box as="span" flexGrow="1" maxWidth="50%"> {contactName} </Box>
+              <Box
+                display="inline-flex"
+                alignItems="center"
+                gridGap={theme.space.normal}
+                flexGrow="1"
+              >
+                <Box as="span" flexGrow="1" maxWidth="50%">
+                  {' '}
+                  {contactName}{' '}
+                </Box>
                 <span> {phoneNumber} </span>
               </Box>
-              {/* <ButtonStyled type="button" onClick={() => dispatch(deleteContact(id))}>
-              <AiOutlineUserDelete/>
-              Delete
-            </ButtonStyled> */}
               <Button
                 type="button"
                 onClick={() => dispatch(deleteContact(id))}
                 variant="outlined"
-                size='small'
+                size="small"
                 color="error"
                 startIcon={<PersonRemoveIcon />}
               >

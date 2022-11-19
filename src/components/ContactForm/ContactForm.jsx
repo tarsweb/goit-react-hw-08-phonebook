@@ -35,7 +35,6 @@ const ContactForm = () => {
     if (event === 'clickaway') {
       return;
     }
-
     setOpen(false);
   };
 
@@ -110,7 +109,6 @@ const ContactForm = () => {
       <Snackbar
         open={open}
         autoHideDuration={3000}
-        onClose={handleClose}
         key='topright'
       > 
         <Alert onClose={handleClose} severity="warning">{message}</Alert> 
