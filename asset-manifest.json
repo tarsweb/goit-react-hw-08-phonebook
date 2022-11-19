@@ -1,9 +1,9 @@
 {
   "files": {
     "main.css": "/goit-react-hw-08-phonebook/static/css/main.b7d0ba3d.css",
-    "main.js": "/goit-react-hw-08-phonebook/static/js/main.f2a8f906.js",
+    "main.js": "/goit-react-hw-08-phonebook/static/js/main.ac4e10cd.js",
     "static/js/415.da8b44f2.chunk.js": "/goit-react-hw-08-phonebook/static/js/415.da8b44f2.chunk.js",
-    "static/js/802.7c9405fe.chunk.js": "/goit-react-hw-08-phonebook/static/js/802.7c9405fe.chunk.js",
+    "static/js/802.38c80db6.chunk.js": "/goit-react-hw-08-phonebook/static/js/802.38c80db6.chunk.js",
     "static/js/519.b40b8750.chunk.js": "/goit-react-hw-08-phonebook/static/js/519.b40b8750.chunk.js",
     "static/js/687.1290889c.chunk.js": "/goit-react-hw-08-phonebook/static/js/687.1290889c.chunk.js",
     "static/js/805.aa0a02e3.chunk.js": "/goit-react-hw-08-phonebook/static/js/805.aa0a02e3.chunk.js",
@@ -11,9 +11,9 @@
     "static/js/325.566de725.chunk.js": "/goit-react-hw-08-phonebook/static/js/325.566de725.chunk.js",
     "index.html": "/goit-react-hw-08-phonebook/index.html",
     "main.b7d0ba3d.css.map": "/goit-react-hw-08-phonebook/static/css/main.b7d0ba3d.css.map",
-    "main.f2a8f906.js.map": "/goit-react-hw-08-phonebook/static/js/main.f2a8f906.js.map",
+    "main.ac4e10cd.js.map": "/goit-react-hw-08-phonebook/static/js/main.ac4e10cd.js.map",
     "415.da8b44f2.chunk.js.map": "/goit-react-hw-08-phonebook/static/js/415.da8b44f2.chunk.js.map",
-    "802.7c9405fe.chunk.js.map": "/goit-react-hw-08-phonebook/static/js/802.7c9405fe.chunk.js.map",
+    "802.38c80db6.chunk.js.map": "/goit-react-hw-08-phonebook/static/js/802.38c80db6.chunk.js.map",
     "519.b40b8750.chunk.js.map": "/goit-react-hw-08-phonebook/static/js/519.b40b8750.chunk.js.map",
     "687.1290889c.chunk.js.map": "/goit-react-hw-08-phonebook/static/js/687.1290889c.chunk.js.map",
     "805.aa0a02e3.chunk.js.map": "/goit-react-hw-08-phonebook/static/js/805.aa0a02e3.chunk.js.map",
@@ -22,6 +22,6 @@
   },
   "entrypoints": [
     "static/css/main.b7d0ba3d.css",
-    "static/js/main.f2a8f906.js"
+    "static/js/main.ac4e10cd.js"
   ]
 }
