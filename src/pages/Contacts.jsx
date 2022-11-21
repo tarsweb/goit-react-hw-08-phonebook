@@ -6,11 +6,9 @@ import ContactForm from "components/ContactForm"
 import Filter from "components/Filter"
 import ContactList from "components/ContactList"
 
-import { Button, IconButton } from '@mui/material';
+import { Button, IconButton, Dialog, DialogContent} from '@mui/material';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-
-import { Dialog, DialogContent } from '@mui/material';
 
 const Contacts = () => {
   const [open, setOpen] = useState(false);
