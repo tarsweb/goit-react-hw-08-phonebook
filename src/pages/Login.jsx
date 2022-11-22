@@ -15,7 +15,6 @@ const Login = () => {
       mx="auto"
       justifyContent="center"
       minHeight="calc(100vh - 80px)"
-      
     >
       <Dialog open={true} onClose={() => navigate('/')}>
         <DialogContent>
