@@ -1,12 +1,34 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, isAnyOf } from '@reduxjs/toolkit'
 
 import { fetchContacts, addContact, deleteContact } from './operations'
 
-const handlePending = state => {
-  state.isLoading = true;
-};
+const extraActions = [fetchContacts, addContact, deleteContact];
 
-const handleRejected = (state, action) => {
+const getActions = type => isAnyOf(...extraActions.map(action => action[type]))
+
+// Success
+const fetchContactsFulfilledReducer = (state, action) =>{
+  state.items = action.payload;
+}
+
+const addContactFulfilledReducer = (state, action) => {
+  state.items.push(action.payload);
+}
+
+const deleteContactFulfilledReducer = (state, action) => {
+  state.items = state.items.filter(contact => contact.id !== action.payload.id);
+}
+// 
+const pendingReducer = state => {
+   state.isLoading = true;
+}
+
+const fulfilledReducer = state => {
+  state.isLoading = false;
+  state.error = null;
+}
+
+const rejectedReducer = (state, action) => {
   state.isLoading = false;
   state.error = action.payload;
 };
@@ -20,29 +42,13 @@ const contactsSlice = createSlice({
   },
   extraReducers: builder => {
     builder
-    .addCase(fetchContacts.pending, handlePending)
-    .addCase(fetchContacts.fulfilled, (state, action) => {
-      state.isLoading = false;
-      state.error = null;
-      state.items = action.payload;
-    })
-    .addCase(fetchContacts.rejected, handleRejected)
-
-    .addCase(addContact.pending, handlePending)
-    .addCase(addContact.fulfilled, (state, action) => {
-      state.isLoading = false;
-      state.error = null;
-      state.items.push(action.payload);
-    })
-    .addCase(addContact.rejected, handleRejected)
-
-    .addCase(deleteContact.pending, handlePending)
-    .addCase(deleteContact.fulfilled, (state, action) => {
-      state.isLoading = false;
-      state.error = null;
-      state.items = state.items.filter(contact => contact.id !== action.payload.id);
-    })
-    .addCase(deleteContact.rejected, handleRejected)
+    .addCase(fetchContacts.fulfilled, fetchContactsFulfilledReducer)
+    .addCase(addContact.fulfilled, addContactFulfilledReducer)
+    .addCase(deleteContact.fulfilled, deleteContactFulfilledReducer)
+    
+    .addMatcher(getActions("pending"), pendingReducer)
+    .addMatcher(getActions("fulfilled"), fulfilledReducer)
+    .addMatcher(getActions("rejected"), rejectedReducer)
   },
 });
 

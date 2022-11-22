@@ -1,8 +1,53 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { persistReducer } from  'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 import { register, login, logout, refreshUser } from './operations';
+
+const extraActions = [register, login];
+
+const getActions = type => isAnyOf(...extraActions.map(action => action[type]))
+
+//Custom 
+const logoutFulfilledReducer = state => {
+  state.user = { name: null, email: null };
+  state.token = null;
+  state.isLoggedIn = false;
+}
+
+const refreshUserFulfilledReducer = (state, action) => {
+  state.user = action.payload;
+  state.isLoggedIn = true;
+  state.isRefreshing = false;
+}
+
+const refreshUserPendingRejectedReducer = (state, action) => {
+  state.isRefreshing = action.type.endsWith("pending") ? true : false;
+}
+// const refreshUserPendingReducer = state => {
+//   state.isRefreshing = true;
+// }
+
+// const refreshUserRejectedReducer = state => {
+//   state.isRefreshing = false;
+// }
+
+//
+
+// const pendingReducer = state => {
+//   console.log("pending");
+// }
+
+const fulfilledReducer = (state, action) => {
+  state.user = action.payload.user;
+  state.token = action.payload.token;
+  state.isLoggedIn = true;
+  state.error = null;
+}
+
+const rejectedReducer = (state, action) => {
+  state.error = action.payload
+}
 
 const initialState = {
   user: { name: null, email: null },
@@ -18,21 +63,6 @@ const persistConfig = {
   whitelist: ['token'],
 }
 
-// const handlePending = state => {
-//   console.log("pending");
-// }
-
-const handelFulfilled = (state, action) => {
-  state.user = action.payload.user;
-  state.token = action.payload.token;
-  state.isLoggedIn = true;
-  state.error = null;
-}
-
-const handleRejected = (state, action) => {
-  state.error = action.payload
-}
-
 const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -43,37 +73,17 @@ const authSlice = createSlice({
   },
   extraReducers: builder => {
     builder
-    // register
-    //.addCase(register.pending, handlePending)
-    .addCase(register.fulfilled, handelFulfilled)
-    .addCase(register.rejected, handleRejected)
-
-    // login
-    //.addCase(login.pending, handlePending)
-    .addCase(login.fulfilled, handelFulfilled)
-    .addCase(login.rejected, handleRejected)
-
-    // logout
-    //.addCase(logout.pending, handlePending)
-    .addCase(logout.fulfilled, (state) => {
-      state.user = { name: null, email: null };
-      state.token = null;
-      state.isLoggedIn = false;
-    })
-    .addCase(logout.rejected, handleRejected)
+    .addCase(logout.fulfilled, logoutFulfilledReducer)
+    .addCase(logout.rejected, rejectedReducer)
 
     //refreshUser
-    .addCase(refreshUser.pending, (state) => {
-      state.isRefreshing = true;
-    })
-    .addCase(refreshUser.fulfilled, (state, action) => {
-      state.user = action.payload;
-      state.isLoggedIn = true;
-      state.isRefreshing = false;
-    })
-    .addCase(refreshUser.rejected, (state) => {
-      state.isRefreshing = false;
-    })
+    .addCase(refreshUser.pending, refreshUserPendingRejectedReducer)
+    .addCase(refreshUser.fulfilled, refreshUserFulfilledReducer)
+    .addCase(refreshUser.rejected, refreshUserPendingRejectedReducer)
+
+    // .addMatcher(getActions("pending"), pendingReducer)
+    .addMatcher(getActions("fulfilled"), fulfilledReducer)
+    .addMatcher(getActions("rejected"), rejectedReducer)
   },
 });
 
